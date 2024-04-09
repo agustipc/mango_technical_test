@@ -1,0 +1,50 @@
+.rangeContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.valueLabel {
+  margin: 0;
+  white-space: nowrap;
+  min-width: 3em;
+  text-align: right;
+}
+
+.valueLabelRight {
+  text-align: left;
+}
+
+.rangeSlider {
+  position: relative;
+  min-width: 400px;
+  flex-grow: 1;
+  width: 100%;
+  height: 20px;
+
+  .track {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background-color: grey;
+    top: 50%;
+    margin-top: -2px;
+  }
+
+  .thumb {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    transform-origin: center;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}

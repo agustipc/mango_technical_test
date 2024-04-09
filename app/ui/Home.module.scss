@@ -4,4 +4,47 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+
+  nav {
+    margin-top: 6em;
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        text-decoration: none;
+      }
+
+      a {
+        position: relative;
+        color: grey;
+        text-decoration: none;
+
+        &::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 1px;
+          bottom: -5px;
+          left: 0;
+          background-color: black;
+          visibility: hidden;
+          transition: all 0.3s ease-in-out;
+        }
+
+        &:hover,
+        &:focus {
+          color: black;
+          &::after {
+            visibility: visible;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
 }
