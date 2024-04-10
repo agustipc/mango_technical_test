@@ -1,13 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useRange } from '../../hooks/useRange'
+
 import styles from './Range.module.scss'
 
 export default function Range({ min, max }: { min: number; max: number }) {
-  const [minValue, setMinValue] = useState(min)
-  const [maxValue, setMaxValue] = useState(max)
-  const [isEditingMinValue, setIsEditingMinValue] = useState(false)
-  const [isEditingMaxValue, setIsEditingMaxValue] = useState(false)
+  const {
+    minValue,
+    maxValue,
+    isEditingMinValue,
+    isEditingMaxValue,
+    setIsEditingMinValue,
+    setIsEditingMaxValue,
+    handleValueSubmit,
+    handleDraggingBehavior
+  } = useRange(min, max)
 
   const thumbWidth = 20
   const relativeMinPosition = ((minValue - min) / (max - min)) * 100
@@ -18,67 +25,6 @@ export default function Range({ min, max }: { min: number; max: number }) {
   const maxThumbLeftOffset = `calc(${relativeMaxPosition}% - ${
     thumbWidth / 2
   }px)`
-
-  const updateValues = (newValue: number, isMinValue: boolean) => {
-    if (isMinValue) {
-      if (newValue >= min && newValue <= maxValue) {
-        setMinValue(newValue)
-      }
-    } else {
-      if (newValue >= minValue && newValue <= max) {
-        setMaxValue(newValue)
-      }
-    }
-  }
-
-  const handleDraggingBehavior = (
-    e: React.MouseEvent<HTMLElement>,
-    isMinValueThumb: boolean
-  ) => {
-    const thumb = e.currentTarget
-    thumb.style.cursor = 'grabbing'
-    if (!thumb.parentElement) return
-
-    const { left, width } = thumb.parentElement.getBoundingClientRect()
-
-    const onDragging = (movementEvent: MouseEvent) => {
-      const newValue =
-        min + ((movementEvent.clientX - left) / width) * (max - min)
-      if (isMinValueThumb) {
-        if (Math.round(newValue) < maxValue) {
-          updateValues(Math.round(newValue), true)
-        }
-      } else {
-        if (Math.round(newValue) > minValue) {
-          updateValues(Math.round(newValue), false)
-        }
-      }
-    }
-
-    const onStopDragging = () => {
-      thumb.style.cursor = 'pointer'
-      document.removeEventListener('mousemove', onDragging)
-      document.removeEventListener('mouseup', onStopDragging)
-    }
-
-    document.addEventListener('mousemove', onDragging)
-    document.addEventListener('mouseup', onStopDragging)
-  }
-
-  const handleValueSubmit = (newValue: string, isMin: boolean) => {
-    const value = Math.round(Number(newValue))
-    if (isMin) {
-      if (value >= min && value < maxValue) {
-        setMinValue(value)
-      }
-      setIsEditingMinValue(false)
-    } else {
-      if (value > minValue && value <= max) {
-        setMaxValue(value)
-      }
-      setIsEditingMaxValue(false)
-    }
-  }
 
   return (
     <section className={styles.rangeContainer}>
