@@ -1,15 +1,24 @@
 .rangeContainer {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: min-content auto min-content;
   align-items: center;
   gap: 20px;
 }
 
-.valueLabel {
+.valueLabel,
+.editInput {
+  background-color: transparent;
+  border: 1px solid transparent;
   margin: 0;
+  padding: 0;
   white-space: nowrap;
-  min-width: 3em;
+  width: 40px;
   text-align: right;
+
+  &:focus {
+    outline: none;
+    border: 1px solid grey;
+  }
 }
 
 .valueLabelRight {
@@ -18,9 +27,6 @@
 
 .rangeSlider {
   position: relative;
-  min-width: 400px;
-  flex-grow: 1;
-  width: 100%;
   height: 20px;
 
   .track {
@@ -29,7 +35,7 @@
     height: 4px;
     background-color: grey;
     top: 50%;
-    margin-top: -2px;
+    transform: translateY(-50%);
   }
 
   .thumb {
@@ -42,9 +48,19 @@
     user-select: none;
     transform-origin: center;
     transition: transform 0.2s ease;
+    z-index: 2;
 
     &:hover {
       transform: scale(1.2);
     }
+  }
+}
+
+.editInput {
+  -moz-appearance: textfield;
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }

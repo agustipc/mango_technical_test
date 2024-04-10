@@ -6,6 +6,8 @@ import styles from './Range.module.scss'
 export default function Range({ min, max }: { min: number; max: number }) {
   const [minValue, setMinValue] = useState(min)
   const [maxValue, setMaxValue] = useState(max)
+  const [isEditingMinValue, setIsEditingMinValue] = useState(false)
+  const [isEditingMaxValue, setIsEditingMaxValue] = useState(false)
 
   const thumbWidth = 20
   const relativeMinPosition = ((minValue - min) / (max - min)) * 100
@@ -63,9 +65,45 @@ export default function Range({ min, max }: { min: number; max: number }) {
     document.addEventListener('mouseup', onStopDragging)
   }
 
+  const handleValueSubmit = (newValue: string, isMin: boolean) => {
+    const value = Math.round(Number(newValue))
+    if (isMin) {
+      if (value >= min && value < maxValue) {
+        setMinValue(value)
+      }
+      setIsEditingMinValue(false)
+    } else {
+      if (value > minValue && value <= max) {
+        setMaxValue(value)
+      }
+      setIsEditingMaxValue(false)
+    }
+  }
+
   return (
     <section className={styles.rangeContainer}>
-      <label className={styles.valueLabel}>{minValue} &euro;</label>
+      {isEditingMinValue ? (
+        <input
+          type="number"
+          data-testid="min-value-input"
+          className={styles.editInput}
+          defaultValue={minValue}
+          onBlur={(e) => handleValueSubmit(e.target.value, true)}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter') (e.target as HTMLInputElement).blur()
+          }}
+          onFocus={(e) => e.target.select()}
+          autoFocus
+        />
+      ) : (
+        <label
+          data-testid="min-value-label"
+          className={styles.valueLabel}
+          onClick={() => setIsEditingMinValue(true)}
+        >
+          {minValue} &euro;
+        </label>
+      )}
       <div className={styles.rangeSlider}>
         <div className={styles.track} />
         <div
@@ -82,9 +120,29 @@ export default function Range({ min, max }: { min: number; max: number }) {
           onMouseDown={(e) => handleDraggingBehavior(e, false)}
         ></div>
       </div>
-      <label className={`${styles.valueLabel} ${styles.valueLabelRight}`}>
-        {maxValue} &euro;
-      </label>
+
+      {isEditingMaxValue ? (
+        <input
+          type="number"
+          data-testid="max-value-input"
+          className={styles.editInput}
+          defaultValue={maxValue}
+          onBlur={(e) => handleValueSubmit(e.target.value, false)}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter') (e.target as HTMLInputElement).blur()
+          }}
+          onFocus={(e) => e.target.select()}
+          autoFocus
+        />
+      ) : (
+        <label
+          data-testid="max-value-label"
+          className={`${styles.valueLabel} ${styles.valueLabelRight}`}
+          onClick={() => setIsEditingMaxValue(true)}
+        >
+          {maxValue} &euro;
+        </label>
+      )}
     </section>
   )
 }

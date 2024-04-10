@@ -84,4 +84,55 @@ describe('Range Component', () => {
 
     expect(screen.getByText('51 €')).toBeInTheDocument()
   })
+
+  test('should show an input field when clicking on the min thumb', () => {
+    render(<Range min={0} max={100} />)
+
+    const minValueLabel = screen.getByTestId('min-value-label')
+    fireEvent.click(minValueLabel)
+
+    expect(screen.getByDisplayValue('0')).toBeInTheDocument()
+  })
+
+  test('should updates min value using the input', () => {
+    render(<Range min={0} max={100} />)
+
+    const minValueLabel = screen.getByTestId('min-value-label')
+    fireEvent.click(minValueLabel)
+    const input = screen.getByTestId('min-value-input')
+    fireEvent.change(input, { target: { value: '10' } })
+    fireEvent.blur(input)
+
+    expect(screen.getByText('10 €')).toBeInTheDocument()
+  })
+
+  test('should updates max value using the input', () => {
+    render(<Range min={0} max={100} />)
+
+    const maxValueLabel = screen.getByTestId('max-value-label')
+    fireEvent.click(maxValueLabel)
+    const input = screen.getByTestId('max-value-input')
+    fireEvent.change(input, { target: { value: '10' } })
+    fireEvent.blur(input)
+
+    expect(screen.getByText('10 €')).toBeInTheDocument()
+  })
+
+  test('should not update min value with input if is bigger than max value', () => {
+    render(<Range min={0} max={100} />)
+
+    const maxThumb = screen.getByTestId('max-thumb')
+    fireEvent.mouseDown(maxThumb, { clientX: 100 })
+    fireEvent.mouseMove(document, { clientX: 51 })
+    fireEvent.mouseUp(document)
+    expect(screen.getByText('51 €')).toBeInTheDocument()
+
+    const minValueLabel = screen.getByTestId('min-value-label')
+    fireEvent.click(minValueLabel)
+    const input = screen.getByTestId('min-value-input')
+    fireEvent.change(input, { target: { value: '52' } })
+    fireEvent.blur(input)
+
+    expect(screen.getByText('0 €')).toBeInTheDocument()
+  })
 })
