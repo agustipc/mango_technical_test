@@ -59,7 +59,7 @@ Provide a localhost:8080/exercise1 route with the following:
       into draggable.
 - [x] Dragging a bullet turns cursor to dragging
 - [x] Min value and max value can't be crossed in range
-- [ ] For this example, provide a mocked http service returning min and max values
+- [x] For this example, provide a mocked http service returning min and max values
       that have to be used in the component. Example: {min: 1, max: 100}. Use
       https://www.mockable.io/ or a custom mocked
       server.
