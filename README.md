@@ -8,7 +8,8 @@
 4. [Getting Started](#getting-started)
    - [Installation](#installation)
    - [Running the Tests](#running-the-tests)
-5. [Requirements](#requirements)
+5. [To improve](#to-improve)
+6. [Requirements](#requirements)
    - [Normal Range](#normal-range)
    - [Fixed Values Range](#fixed-values-range)
 
@@ -44,6 +45,20 @@ To run the the tests use:
 npm test
 ```
 
+## To improve
+
+This are some improvements that can be done to the project, if the time was not a constraint:
+
+Add some loading functionality for the mocked services, is interesting to use `<Suspense>` components and show a skeleton component while the data is loading for example.
+
+Add some error handling for the mocked services
+
+For more testing coverange its interesting to use cypress for end to end testing and more complex ui testing.
+
+Even the two range components a similar, they have multiple big differences, so in purpose of have it done, I've decided to create two different components, but it should be improved to have a single component that can be used for both cases or at least make it more reusable for example creating smaller components with the thumbs etc.
+
+Thinking on how this component should work in a real world scenario, probabli we need a context to handle the state of the range, so it can be used in multiple components and the state can be shared between them.
+
 ## Requirements
 
 ### Normal range:
@@ -69,16 +84,16 @@ Provide a localhost:8080/exercise1 route with the following:
 
 Provide a localhost:8080/exercise2 route with the following:
 
-- [ ] The component CAN'T be a HTML5 input range. It has to be a custom one.
-- [ ] Given a range of values: [1.99, 5.99, 10.99, 30.99, 50.99, 70.99] the user will only
+- [x] The component CAN'T be a HTML5 input range. It has to be a custom one.
+- [x] Given a range of values: [1.99, 5.99, 10.99, 30.99, 50.99, 70.99] the user will only
       be able to select those values in range
-- [ ] Provide a mocked http service that returns the array of numbers: [1.99, 5.99,
+- [x] Provide a mocked http service that returns the array of numbers: [1.99, 5.99,
       10.99, 30.99, 50.99, 70.99]. Use h ttps://www.mockable.io/ or a custom mocked
       server.
-- [ ] For this type of range, currency values are not input changable. They have to be
+- [x] For this type of range, currency values are not input changable. They have to be
       only a label
-- [ ] The user can drag two bullets through the range line.
-- [ ] Min value and max value can't be crossed in range
-- [ ] For this example, provide a mocked service returning min and max values that
+- [x] The user can drag two bullets through the range line.
+- [x] Min value and max value can't be crossed in range
+- [x] For this example, provide a mocked service returning min and max values that
       have to be used in the component. Example: {rangeValues: []}
-- [ ] Do as many unit tests as you can.
+- [x] Do as many unit tests as you can.

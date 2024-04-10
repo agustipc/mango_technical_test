@@ -1,4 +1,4 @@
-import Range from '../ui/Range/Range'
+import Range from '../ui/Ranges/NormalRange/NormalRange'
 import styles from '../ui/Home.module.scss'
 import { fetchRangeValues } from '../lib/data'
 

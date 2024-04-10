@@ -1,10 +1,16 @@
 'use client'
 
-import { useRange } from '../../hooks/useRange'
+import { useRange } from '../../../hooks/useRange'
 
-import styles from './Range.module.scss'
+import styles from '../Range.module.scss'
 
-export default function Range({ min, max }: { min: number; max: number }) {
+export default function NormalRange({
+  min,
+  max
+}: {
+  min: number
+  max: number
+}) {
   const {
     minValue,
     maxValue,

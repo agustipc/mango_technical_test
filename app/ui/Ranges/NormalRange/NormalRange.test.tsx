@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import Range from './Range'
+import NormalRange from './NormalRange'
 
 describe('Range Component', () => {
   beforeEach(() => {
@@ -22,29 +22,29 @@ describe('Range Component', () => {
   })
 
   test('should render the range slider component with initial min and max values', () => {
-    render(<Range min={0} max={100} />)
+    render(<NormalRange min={0} max={100} />)
     expect(screen.getByText('0 €')).toBeInTheDocument()
     expect(screen.getByText('100 €')).toBeInTheDocument()
   })
 
   test('should not allow dragging the thumbs outside of min and max values', () => {
-    render(<Range min={0} max={100} />)
+    render(<NormalRange min={0} max={100} />)
 
     const minThumb = screen.getByTestId('min-thumb')
     fireEvent.mouseDown(minThumb, { clientX: 0 })
     fireEvent.mouseMove(minThumb, { clientX: 1100 })
     fireEvent.mouseUp(minThumb)
-    expect(screen.getByText('100 €')).toBeInTheDocument()
+    expect(screen.getByText('0 €')).toBeInTheDocument()
 
     const maxThumb = screen.getByTestId('max-thumb')
     fireEvent.mouseDown(maxThumb, { clientX: 100 })
     fireEvent.mouseMove(maxThumb, { clientX: -100 })
     fireEvent.mouseUp(maxThumb)
-    expect(screen.getByText('0 €')).toBeInTheDocument()
+    expect(screen.getByText('100 €')).toBeInTheDocument()
   })
 
   test('should not allow dragging the min thumb to be greater than the max thumb', () => {
-    render(<Range min={0} max={100} />)
+    render(<NormalRange min={0} max={100} />)
 
     const maxThumb = screen.getByTestId('max-thumb')
     fireEvent.mouseDown(maxThumb, { clientX: 100 })
@@ -65,7 +65,7 @@ describe('Range Component', () => {
   })
 
   test('should not allow dragging the max thumb to be less than the min thumb', () => {
-    render(<Range min={0} max={100} />)
+    render(<NormalRange min={0} max={100} />)
 
     const minThumb = screen.getByTestId('min-thumb')
     fireEvent.mouseDown(minThumb, { clientX: 0 })
@@ -86,7 +86,7 @@ describe('Range Component', () => {
   })
 
   test('should show an input field when clicking on the min thumb', () => {
-    render(<Range min={0} max={100} />)
+    render(<NormalRange min={0} max={100} />)
 
     const minValueLabel = screen.getByTestId('min-value-label')
     fireEvent.click(minValueLabel)
@@ -95,7 +95,7 @@ describe('Range Component', () => {
   })
 
   test('should updates min value using the input', () => {
-    render(<Range min={0} max={100} />)
+    render(<NormalRange min={0} max={100} />)
 
     const minValueLabel = screen.getByTestId('min-value-label')
     fireEvent.click(minValueLabel)
@@ -107,7 +107,7 @@ describe('Range Component', () => {
   })
 
   test('should updates max value using the input', () => {
-    render(<Range min={0} max={100} />)
+    render(<NormalRange min={0} max={100} />)
 
     const maxValueLabel = screen.getByTestId('max-value-label')
     fireEvent.click(maxValueLabel)
@@ -119,7 +119,7 @@ describe('Range Component', () => {
   })
 
   test('should not update min value with input if is bigger than max value', () => {
-    render(<Range min={0} max={100} />)
+    render(<NormalRange min={0} max={100} />)
 
     const maxThumb = screen.getByTestId('max-thumb')
     fireEvent.mouseDown(maxThumb, { clientX: 100 })

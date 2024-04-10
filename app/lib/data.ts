@@ -13,3 +13,13 @@ export async function fetchRangeValues(): Promise<RangeValues> {
     }, 1000)
   })
 }
+
+export async function fetchRangeFixedValues(): Promise<number[]> {
+  const data: number[] = [1.99, 5.99, 10.99, 30.99, 50.99, 70.99]
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(data)
+    }, 1000)
+  })
+}
