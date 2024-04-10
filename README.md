@@ -59,6 +59,8 @@ Even the two range components a similar, they have multiple big differences, so 
 
 Thinking on how this component should work in a real world scenario, probabli we need a context to handle the state of the range, so it can be used in multiple components and the state can be shared between them.
 
+Add accessibility atributes with "aria" on the components
+
 ## Requirements
 
 ### Normal range:
